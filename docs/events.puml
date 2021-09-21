@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+title Tasker Client -- Event Sequent Calls
+
+actor user
+participant WebBrowser
+participant App
+participant ShowHideFormButton
+participant NewTaskForm
+participant AddTaskButton
+participant CheckBox
+participant API
+autonumber
+
+WebBrowser -> App++:
+    App -> App++: fetchTaskList
+        App -> API++: GET /api/v1/tasks
+        return
+    return
+return
+
+user -> ShowHideFormButton++:click to show the new task form
+    ShowHideFormButton -> NewTaskForm++:onAdd
+    return
+return
+
+user -> AddTaskButton++: click to submit new task
+    AddTaskButton -> App++: addTask
+        App -> API ++: POST /add
+        return
+    return
+return
+
+user -> CheckBox++: check to complete task
+    CheckBox -> App++: completeTask
+        App -> API++: PUT /api/v1/task/{taskId}
+        return
+    return
+return
+
+@enduml

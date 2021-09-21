@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# Task Manager UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Taskman Client UI](docs/taskman-client.png)
+## Clone
+To clone, type this in the terminal
+```shell
+git clone https://github.com/muntasirrahman/taskman-client.git
+```
 
-## Available Scripts
+### Launch Application
 
-In the project directory, you can run:
+The App requires backend application, see  [taskman-api](https://github.com/muntasirrahman/taskman-api)
 
-### `npm start`
 
+```shell
+npm start
+```
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ 
 
-### `npm test`
+### How It Works
 
+![sequence diagram](docs/events-seq-calls.png)
+
+To update this sequence diagram,
+* install PlantUML plugin
+* Edit the events.puml file in the docs folder
+
+### Test
+
+To test the application
+
+```shell
+npm test
+```
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+
+## Deployment
+### Production Build
+
+Edit the `.env.production` file
+```
+REACT_APP_API_HOST=http://150.230.44.18
+```
+
+Also edit the nginx configuration file `nginx/nginx.conf` to ensure the Backend API URL
+```shell
+proxy_pass  http://10.0.0.205:8000;
+```
+
+Then type:
+```shell
+npm run build
+```
 
 Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It bundles the app in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Docker Image
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Build the Docker image, by typing this:
+```shell
+docker build -t taskman-client:amd64 -f Dockerfile.prod .
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Then push it to the Docker hub
+```shell
+docker push muntasir/taskman-client:amd64
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Check the presence of the newly uploaded docker image, by open this URL
+[https://hub.docker.com/repository/docker/muntasir/taskman-client](https://hub.docker.com/repository/docker/muntasir/taskman-client)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+At the deployment server
+```shell
+docker pull muntasir/taskman-client:amd64
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To run it
+```shell
+docker run -p 80:80 muntasir/taskman-client:amd64
+```
