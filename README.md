@@ -7,10 +7,9 @@ To clone, type this in the terminal
 git clone https://github.com/muntasirrahman/taskman-client.git
 ```
 
-### Launch Application
+### Launching the Application Directly
 
 The App requires backend application, see  [taskman-api](https://github.com/muntasirrahman/taskman-api)
-
 
 ```shell
 npm start
@@ -18,7 +17,16 @@ npm start
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
- 
+### Launching the App using Docker
+Build the Docker image, by typing this:
+```shell
+docker build -t taskman-client -f Dockerfile .
+```
+
+Run it by
+```shell
+docker run -p 3000:3000 taskman-client
+```
 
 ### How It Works
 
@@ -67,7 +75,7 @@ The app is ready to be deployed!
 
 Build the Docker image, by typing this:
 ```shell
-docker build -t taskman-client:amd64 -f Dockerfile.prod .
+docker build -t muntasir/taskman-client:amd64 -f Dockerfile.prod .
 ```
 
 Then push it to the Docker hub
